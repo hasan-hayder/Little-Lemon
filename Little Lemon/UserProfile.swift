@@ -19,9 +19,17 @@ struct UserProfile: View {
         VStack {
             Text("Personal information")
             Image("profile-image-placeholder")
-            Text(firstName ?? "First name:")
-            Text(lastName ?? "Last name:")
-            Text(email ?? "email:")
+            List{
+                Section(header: Text("First name")){
+                    Text(firstName ?? "")
+                }
+                Section(header: Text("Last name")){
+                    Text(lastName ?? "")
+                }
+                Section(header: Text("Email")){
+                    Text(email ?? "")
+                }
+            }
             
             Button(action: {
                 //Open the UserProfile file again, and inside the logout button trailing closure first access the standard property of the UserDefaults and set false value using the login constant as a key that you defined at the top of the Onboarding file. Then on the following line add the following code self.presentation.wrappedValue.dismiss(). When executed, it will automatically tell the NavigationView to go back to the previous screen which is Onboarding simulating logout.

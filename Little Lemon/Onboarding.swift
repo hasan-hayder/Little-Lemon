@@ -22,23 +22,55 @@ struct Onboarding: View {
     @State var isLoggedIn = false
     
     var body: some View {
-        NavigationView {
-            VStack {
-                NavigationLink("Home",  destination: Home(), isActive: $isLoggedIn)
-                    .padding(.bottom)
-                    .foregroundColor(/*@START_MENU_TOKEN@*/Color(hue: 0.336, saturation: 1.0, brightness: 0.416)/*@END_MENU_TOKEN@*/)
-                TextField( "First Name",
-                           text: $firstName
-                )
-                TextField( "Last Name",
-                           text: $lastName
-                )
-                TextField("Email",
-                          text: $email
-                )
+        NavigationView{
+            VStack(alignment: .leading){
+                ZStack{
+                    Color(red: 73/255, green: 99/255, blue: 90/255)
+                    VStack(alignment: .leading){
+                        Text("Little Lemon")
+                            .font(.largeTitle)
+                            .foregroundColor(Color(red: 244/255, green: 206/255, blue: 20/255))
+                        Text("New York")
+                            .font(.subheadline)
+                            .foregroundColor(Color.white)
+                        Spacer()
+                        HStack{
+                            Text("We are a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.")
+                                .font(.body)
+                                .foregroundColor(Color.white)
+                            
+                            Image("Hero image")
+                                                            .resizable()
+                                                            .aspectRatio(contentMode: .fit)
+                                                            .cornerRadius(15)
+                                                            .frame(width: 160, height: 140)
+                            
+                            
+                        }
+                        
+                    }
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding([.leading, .trailing])
+                }
+                .frame(height: 300)
+                NavigationLink(destination: Home(), isActive: $isLoggedIn){
+                    EmptyView()
+                }
+                Group{
+                    TextField( "First Name",
+                               text: $firstName
+                    ) .textFieldStyle(.roundedBorder)
+                    TextField( "Last Name",
+                               text: $lastName
+                    ) .textFieldStyle(.roundedBorder)
+                    TextField("Email",
+                              text: $email
+                    ) .textFieldStyle(.roundedBorder)
+                }
+                    .padding([.leading, .trailing])
                 Button(action: {
-                    if firstName.isEmpty == false ||
-                        lastName.isEmpty == false ||
+                    if firstName.isEmpty == false &&
+                        lastName.isEmpty == false &&
                         email.isEmpty == false {
                         UserDefaults.standard.set(firstName, forKey: kFirstName)
                         UserDefaults.standard.set(lastName, forKey: kSecondName)
@@ -49,12 +81,13 @@ struct Onboarding: View {
                     }
                 }, label: {
                     Text("Register")
-                })
+                }
+                )
                 .padding(.init(top: 10, leading: 30, bottom: 10, trailing: 30))
                 .foregroundColor(.white)
                 .background(Color.blue)
                 .cornerRadius(20)
-                .padding(.top, 10)
+                .padding([.top, .leading], 16.0)
                 //At the end of the VStack, the first view inside the NavigationView call an onAppear method with a trailing closure. Inside the closure, add an if check, and access the standard property of the UserDefaults, and call a bool method with a logged in key that you defined at the top of the file in the previous step. This will check if the key is set to true.
                 .onAppear() {
                     if UserDefaults.standard.bool(forKey: kIsLoggedIn) {
@@ -64,7 +97,7 @@ struct Onboarding: View {
                 
             }
         }
-        .padding(.leading)
+
         
     }
 }
